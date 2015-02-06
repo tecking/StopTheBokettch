@@ -1,0 +1,23 @@
+@charset "UTF-8";
+/**
+ * Stop the Bokettch for baserCMS スタイルシート
+ *
+ * copyright  Copyright 2015 - , tecking
+ * version    0.1.0
+ * license    MIT License
+ */
+
+span#StopTheBokettch {
+	display: inline !important;
+	padding: 3px 5px !important;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background: #e20;
+	color: #fff !important;
+	font-weight: bold;
+}
+
+span#StopTheBokettch .fa {
+	padding-right: 2px;
+}
