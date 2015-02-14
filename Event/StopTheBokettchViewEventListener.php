@@ -7,7 +7,7 @@
  * @link       http://baser-for-wper.tecking.org
  * @package    tecking.bcplugins.stop_the_bokettch
  * @since      baserCMS v 3.0.6.1
- * @version    0.1.0
+ * @version    0.1.1
  * @license    MIT License
  */
 
