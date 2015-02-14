@@ -20,6 +20,10 @@ git clone または ZIP ファイルをダウンロードして /app/Plugin デ�
 
 公開状態は、管理画面の [システム設定] － [サイト基本設定] にある「公開状態」セレクトボックスで設定できます。
 
+## 留意事項
+
+通知メッセージは、デフォルトのツールバーエレメント（ /lib/Baser/View/Elements/admin/toolbar.php ）の出力を一部置換して出力しています。ツールバーにカスタマイズを加えている場合、通知メッセージの表示がうまくいかないことがありますのでご注意ください。
+
 ## 謝辞
 
 『Stop the Bokettch』の名を拝借するにあたり、プラグイン作者の [@jim0912](https://twitter.com/jim0912) さん、ぼけっちの生みの親 [@Webourgeon_com](https://twitter.com/Webourgeon_com) さんのご快諾をたまわりました。ありがとうございます。
