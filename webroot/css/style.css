@@ -3,7 +3,7 @@
  * Stop the Bokettch for baserCMS スタイルシート
  *
  * copyright  Copyright 2015 - , tecking
- * version    0.1.1
+ * version    0.2.0
  * license    MIT License
  */
 
@@ -18,6 +18,6 @@ span#StopTheBokettch {
 	font-weight: bold;
 }
 
-span#StopTheBokettch .fa {
+span#StopTheBokettch .fas {
 	padding-right: 2px;
 }
