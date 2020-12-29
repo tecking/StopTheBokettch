@@ -39,6 +39,8 @@ class StopTheBokettchViewEventListener extends BcViewEventListener {
 				$el = [];
 				$el['li'] = $dom->createElement('li');
 				$el['li']->setAttribute('class', 'tool-menu');
+				$el['div'] = $dom->createElement('div');
+				$el['div']->setAttribute('class', 'bca-toolbar__tools-mode');
 				$el['span'] = $dom->createElement('span');
 				$el['span']->setAttribute('id', 'StopTheBokettch');
 				$el['i'] = $dom->createElement('i');
@@ -51,10 +53,11 @@ class StopTheBokettchViewEventListener extends BcViewEventListener {
 				if (Configure::read('BcSite.admin_theme') === 'admin-third' || $Subject->viewVars['siteConfig']['admin_theme'] === 'admin-third') { // admin-third
 
 					// XPath 式の評価
-					$node = $xpath->query('//*[@id="ToolMenu"]/div')->item(0);
+					$node = $xpath->query('//*[@id="ToolMenu"]')->item(0);
 					
 					// 要素の追加
-					$node->appendChild($el['span']);
+					$node->appendChild($el['div']);
+					$el['div']->appendChild($el['span']);
 					$el['span']->appendChild($el['i']);
 					$el['span']->appendChild($msg);
 
@@ -62,14 +65,14 @@ class StopTheBokettchViewEventListener extends BcViewEventListener {
 				else { // それ以外（admin-second）
 
 					// XPath 式の評価
-					$node = $xpath->query('//*[@id="ToolMenu"]/ul/li')->item(0);
+					$node = $xpath->query('//*[@id="ToolMenu"]/ul')->item(0);
 
 					// 要素の追加
-					$node->parentNode->appendChild($el['li']);
+					$node->appendChild($el['li']);
 					$el['li']->appendChild($el['span']);
 					$el['span']->appendChild($el['i']);
 					$el['span']->appendChild($msg);
-					
+
 				}			
 
 				// エレメントの文字列を置換
