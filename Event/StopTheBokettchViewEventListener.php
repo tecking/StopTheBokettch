@@ -32,7 +32,7 @@ class StopTheBokettchViewEventListener extends BcViewEventListener {
 
 				// HTML の読み込み
 				$dom = new DOMDocument;
-				@$dom->loadHTML(mb_convert_encoding($data['out'], 'HTML-ENTITIES', 'UTF-8'));
+				@$dom->loadHTML(mb_convert_encoding($data['out'], 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 				$xpath = new DOMXPath($dom);
 
 				// 要素ノードの作成と属性の追加
@@ -69,7 +69,7 @@ class StopTheBokettchViewEventListener extends BcViewEventListener {
 					$el['li']->appendChild($el['span']);
 					$el['span']->appendChild($el['i']);
 					$el['span']->appendChild($msg);
-
+					
 				}			
 
 				// エレメントの文字列を置換
