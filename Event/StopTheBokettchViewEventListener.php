@@ -31,9 +31,8 @@ class StopTheBokettchViewEventListener extends BcViewEventListener {
 			if ($Subject->viewVars['siteConfig']['maintenance'] !== '0') {
 
 				// HTML の読み込み
-				$data['out'] = mb_convert_encoding($data['out'], 'HTML-ENTITIES', 'UTF-8');
 				$dom = new DOMDocument;
-				@$dom->loadHTML($data['out']);
+				@$dom->loadHTML(mb_convert_encoding($data['out'], 'HTML-ENTITIES', 'UTF-8'));
 				$xpath = new DOMXPath($dom);
 
 				// 要素ノードの作成と属性の追加
