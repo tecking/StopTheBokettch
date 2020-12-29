@@ -4,10 +4,10 @@
  * [Stop the Bokettch for baserCMS] Stop the Bokettch for baserCMS ビューイベントリスナ
  *
  * @copyright  Copyright 2015 - , tecking
- * @link       https://baser-for-wper.tecking.org
+ * @link       https://github.com/tecking
  * @package    tecking.bcplugins.stop_the_bokettch
  * @since      baserCMS v 3.0.6.1
- * @version    0.2.0
+ * @version    1.0.0
  * @license    MIT License
  */
 
@@ -23,19 +23,63 @@ class StopTheBokettchViewEventListener extends BcViewEventListener {
 		// イベント発動元のオブジェクトとイベント固有のデータを参照
 		$Subject = $event->subject();
 		$data = $event->data;
-		
-		// エレメントの種類を判定（ツールバーなら true ）
+
+		// エレメントの種類を判定（ツールバーなら true）
 		if (preg_match('/admin\/toolbar/', $data['name']) || (preg_match('/^admin_/', $Subject->request->params['action']) && preg_match('/toolbar/', $data['name']))) {
 			
 			// サイト公開状態を判定し、メンテナンス中ならツールバーの文字列を置換（＝メッセージ表示）
 			if ($Subject->viewVars['siteConfig']['maintenance'] !== '0') {
-				$data['out'] = preg_replace('/(<div id="ToolMenu">.+?)(<\/ul>)/s', '$1<li class="tool-menu"><span id="StopTheBokettch"><i class="fas fa-exclamation-triangle"></i>サイトメンテナンス中</span></li>$2', $data['out']);
+
+				// HTML の読み込み
+				$data['out'] = mb_convert_encoding($data['out'], 'HTML-ENTITIES', 'UTF-8');
+				$dom = new DOMDocument;
+				@$dom->loadHTML($data['out']);
+				$xpath = new DOMXPath($dom);
+
+				// 要素ノードの作成と属性の追加
+				$el = [];
+				$el['li'] = $dom->createElement('li');
+				$el['li']->setAttribute('class', 'tool-menu');
+				$el['span'] = $dom->createElement('span');
+				$el['span']->setAttribute('id', 'StopTheBokettch');
+				$el['i'] = $dom->createElement('i');
+				$el['i']->setAttribute('class', 'fas fa-exclamation-triangle');
+
+				// テキストノードの作成
+				$msg = $dom->createTextNode('サイトメンテナンス中');
+
+				// 管理画面のテーマに応じて処理を分岐
+				if (Configure::read('BcSite.admin_theme') === 'admin-third' || $Subject->viewVars['siteConfig']['admin_theme'] === 'admin-third') { // admin-third
+
+					// XPath 式の評価
+					$node = $xpath->query('//*[@id="ToolMenu"]/div')->item(0);
+					
+					// 要素の追加
+					$node->appendChild($el['span']);
+					$el['span']->appendChild($el['i']);
+					$el['span']->appendChild($msg);
+
+				}
+				else { // それ以外（admin-second）
+
+					// XPath 式の評価
+					$node = $xpath->query('//*[@id="ToolMenu"]/ul/li')->item(0);
+
+					// 要素の追加
+					$node->parentNode->appendChild($el['li']);
+					$el['li']->appendChild($el['span']);
+					$el['span']->appendChild($el['i']);
+					$el['span']->appendChild($msg);
+
+				}			
+
 			}
-			
+
+		// エレメントの文字列を置換
+		return $dom->saveHTML($dom);
+	
 		}
 		
-		// エレメントの文字列を返却
-		return $data['out'];
 	}
 	
 	// <head> セクションへの CSS 挿入処理
