@@ -72,10 +72,10 @@ class StopTheBokettchViewEventListener extends BcViewEventListener {
 
 				}			
 
-			}
+				// エレメントの文字列を置換
+				return $dom->saveHTML($dom);
 
-			// エレメントの文字列を置換
-			return $dom->saveHTML($dom);
+			}
 	
 		}
 		
