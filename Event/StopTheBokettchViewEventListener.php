@@ -90,7 +90,7 @@ class StopTheBokettchViewEventListener extends BcViewEventListener {
 		
 		// ログイン状態とサイト公開状態を判定し、どちらも true なら CSS を挿入
 		if (array_search('admin', $Subject->viewVars['currentUserAuthPrefixes']) !== null && ($Subject->viewVars['siteConfig']['maintenance'] !== '0')) {
-			$Subject->Helpers->BcBaser->css(array('StopTheBokettch.style', '//use.fontawesome.com/releases/v5.0.13/css/all.css'), array('inline' => false));
+			$Subject->Helpers->BcBaser->css(['StopTheBokettch.style', '//use.fontawesome.com/releases/v5.0.13/css/all.css'], ['inline' => false]);
 		}
 		
 		return;
