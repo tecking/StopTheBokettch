@@ -15,7 +15,7 @@
 class StopTheBokettchViewEventListener extends BcViewEventListener {
 
 	// イベントの登録
-	public $events = array('afterElement', 'beforeLayout');
+	public $events = ['afterElement', 'beforeLayout'];
 	
 	// ツールバーへのメッセージ挿入処理
 	public function afterElement(CakeEvent $event) {
