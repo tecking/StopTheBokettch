@@ -31,8 +31,15 @@ class StopTheBokettchViewEventListener extends BcViewEventListener {
 			if ($Subject->viewVars['siteConfig']['maintenance'] !== '0') {
 
 				// HTML の読み込み
+				//   DOMDocument::loadHTML で LIBXML_HTML_NOIMPLIED, LIBXML_HTML_NODEFDTD
+				//   オプションを使うと script 要素の配置で不具合が起きるので div 要素でラップして読み込む
 				$dom = new DOMDocument;
-				@$dom->loadHTML(mb_convert_encoding($data['out'], 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+				@$dom->loadHTML(mb_convert_encoding('<div>' . $data['out'] . '</div>', 'HTML-ENTITIES', 'UTF-8'));
+
+				// 読み込んだ HTML の子ノードを削除（doctype）, 置換（div を最上位の子ノードに）
+				$dom->removeChild($dom->firstChild);
+				$dom->replaceChild($dom->firstChild->firstChild->firstChild, $dom->firstChild);				
+				
 				$xpath = new DOMXPath($dom);
 
 				// 要素ノードの作成と属性の追加
@@ -91,10 +98,10 @@ class StopTheBokettchViewEventListener extends BcViewEventListener {
 		$Subject = $event->subject();
 		
 		// ログイン状態とサイト公開状態を判定し、どちらも true なら CSS を挿入
-		if (array_search('admin', $Subject->viewVars['currentUserAuthPrefixes']) !== null && ($Subject->viewVars['siteConfig']['maintenance'] !== '0')) {
+		if (!empty($Subject->viewVars['user']) && ($Subject->viewVars['siteConfig']['maintenance'] !== '0')) {
 			$Subject->Helpers->BcBaser->css(['StopTheBokettch.style', '//use.fontawesome.com/releases/v5.0.13/css/all.css'], ['inline' => false]);
 		}
-		
+				
 		return;
 	}
 	
