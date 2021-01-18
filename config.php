@@ -7,7 +7,7 @@
  * @link       https://github.com/tecking
  * @package    tecking.bcplugins.stop_the_bokettch
  * @since      baserCMS v 3.0.6.1
- * @version    1.0.0
+ * @version    1.0.1
  */
 
 $title = 'Stop the Bokettch for baserCMS';
